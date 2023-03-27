@@ -11,12 +11,7 @@ export const findRandomPoem = async (): Promise<PoemT> => {
     return response.data;
 }
 
-export const findAllPoems = async (): Promise<PoemT[]> => {
-    const response = await request.get('/', {
-        params: {
-            offset: 0,
-            limit: 10
-        }
-    });
+export const findPoems = async (query: string, selectedInitial: string): Promise<PoemT[]> => {    
+    const response = await request.get(`/search?q=${query}&i=${selectedInitial}`);
     return response.data.docs;
 }

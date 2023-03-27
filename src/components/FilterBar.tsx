@@ -3,16 +3,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Grid, Stack } from "@mui/material";
 
 type FilterBarProps = { 
-    query: string; 
+    selectedInitial: string;
     onQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void; 
-    onInitialsChange: (initial: string) => void; 
+    onInitialChange: (initial: string) => void; 
 }
 
 export const FilterBar = (props: FilterBarProps) => {
     const {
-        query,
+        selectedInitial,
         onQueryChange,
-        onInitialsChange,
+        onInitialChange,
     } = props;
     
     /**
@@ -29,7 +29,6 @@ export const FilterBar = (props: FilterBarProps) => {
                 <StyledInputBase
                     placeholder="What poem or poet do you feel like reading today ?"
                     inputProps={{ 'aria-label': 'search by poem title or poet name' }}
-                    value={query}
                     onChange={onQueryChange}
                 />
             </Search>
@@ -38,7 +37,8 @@ export const FilterBar = (props: FilterBarProps) => {
                {alphabet.map((letter) => (
                     <Grid item key={letter}>
                         <InitialLetterButton 
-                            onClick={() => onInitialsChange(letter)}
+                            onClick={() => onInitialChange(letter)}
+                            selected={selectedInitial === letter}
                         >
                             {letter}
                         </InitialLetterButton>

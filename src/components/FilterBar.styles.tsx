@@ -39,8 +39,10 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const InitialLetterButton = styled(Button)(({ theme }) => ({
-  color: alpha(theme.palette.text.primary, 0.5),
+export const InitialLetterButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== "selected",
+})<{ selected?: boolean }>(({ theme, selected }) => ({
+  color: selected ? theme.palette.primary.contrastText : alpha(theme.palette.text.primary, 0.5),
   border: `1px solid ${alpha(theme.palette.text.primary, 0.2)}`,
   borderRadius: '0.2em',
   width: '1.5em',
@@ -48,4 +50,8 @@ export const InitialLetterButton = styled(Button)(({ theme }) => ({
   minWidth: '32px',
   minHeight: '32px',
   textTransform: 'uppercase',
+  backgroundColor: selected ? theme.palette.primary.main : 'transparent',
+  "&:hover": {
+    backgroundColor: selected ? theme.palette.primary.main : alpha(theme.palette.primary.main, 0.1),
+  },
 }));
