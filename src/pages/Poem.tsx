@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { findPoemById, findRandomPoem } from "../api/poems";
+import { findPoemById } from "../api/poems";
 import { useQuery } from '@tanstack/react-query';
 import { alpha, Box, Skeleton, Stack, styled, Typography } from "@mui/material";
 import { parsePoem } from "../utils/poems";

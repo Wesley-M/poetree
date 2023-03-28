@@ -37,7 +37,7 @@ export const ExplorePoems = () => {
     /**
      * Initial for filtering poems by title
     */
-    const [selectedInitial, setSelectedInitial] = useState<string>([]);
+    const [selectedInitial, setSelectedInitial] = useState<string>("");
 
     /**
      * Handles query change
