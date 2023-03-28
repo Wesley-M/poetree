@@ -17,7 +17,7 @@ const getApiURL = () => {
   if (MODE == 'dev' as MODE_TYPE) {
     return "http://192.168.0.102:5050/poems";
   } else {
-    return "http://poetree-api.cyclic.app/poems";
+    return "https://poetree-api.cyclic.app/poems";
   }
 }
 
