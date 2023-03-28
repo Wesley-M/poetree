@@ -1,4 +1,13 @@
+
+/**
+ * Set the environment
+*/
 const MODE = "dev";
+
+/**
+ * Page size for pagination purposes
+ * */ 
+const PAGE_SIZE = 10;
 
 /**
  * Get the API URL based on the environment
@@ -12,5 +21,6 @@ const getApiURL = () => {
 }
 
 export {
-    getApiURL
+    getApiURL,
+    PAGE_SIZE
 }

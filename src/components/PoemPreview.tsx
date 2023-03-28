@@ -1,12 +1,12 @@
-import { Box, Divider, Typography } from "@mui/material"
+import { Box, Divider, Skeleton, Stack, Typography } from "@mui/material"
 import { PoemT } from "../api/types";
 import { Author, Excerpt, PreviewContainer, Title } from "./PoemPreview.styles";
 
 type PoemPreviewProps = {
-    poem: PoemT
+    poem?: PoemT,
 }
 
-const PoemPreview = (props : PoemPreviewProps) => {
+const PoemPreview = (props: PoemPreviewProps) => {
     const {
         poem
     } = props;
@@ -20,13 +20,24 @@ const PoemPreview = (props : PoemPreviewProps) => {
 
     return (
         <Box>
-            <Divider/>
+            <Divider />
             <PreviewContainer>
-                <Title to={`poems/${poem._id}`}>{poem.title}</Title>
-                <Author>By {poem.author}</Author>
-                <Excerpt>{getExcerpt(poem.text).map(text => <Typography>{text}</Typography>)}</Excerpt>
+                {poem ? (
+                    <>
+                        <Title to={`poems/${poem._id}`}>{poem.title}</Title>
+                        <Author>By {poem.author}</Author>
+                        <Excerpt>{getExcerpt(poem.text).map(text => <Typography>{text}</Typography>)}</Excerpt>
+                    </>
+                ) : (
+                    <Stack direction="column" spacing={1}>
+                        <Skeleton variant="rounded" width={300} height={20} />
+                        <Skeleton variant="rounded" width={200} height={15} />
+                        <Skeleton variant="rounded" width={350} height={10} />
+                        <Skeleton variant="rounded" width={350} height={10} />
+                    </Stack>
+                )}
             </PreviewContainer>
-            <Divider/>
+            <Divider />
         </Box>
     )
 }

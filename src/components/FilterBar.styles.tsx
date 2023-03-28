@@ -43,7 +43,7 @@ export const InitialLetterButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== "selected",
 })<{ selected?: boolean }>(({ theme, selected }) => ({
   color: selected ? theme.palette.primary.contrastText : alpha(theme.palette.text.primary, 0.5),
-  border: `1px solid ${alpha(theme.palette.text.primary, 0.2)}`,
+  border: selected ? theme.palette.primary.main : `2px solid ${alpha(theme.palette.text.primary, 0.2)}`,
   borderRadius: '0.2em',
   width: '1.5em',
   height: '1.5em',
@@ -53,5 +53,6 @@ export const InitialLetterButton = styled(Button, {
   backgroundColor: selected ? theme.palette.primary.main : 'transparent',
   "&:hover": {
     backgroundColor: selected ? theme.palette.primary.main : alpha(theme.palette.primary.main, 0.1),
+    border: `2px solid ${alpha(theme.palette.primary.main, 0.5)}`,
   },
 }));

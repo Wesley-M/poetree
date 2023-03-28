@@ -1,14 +1,15 @@
 import { useCallback, useState } from "react";
 import { findPoems } from "../api/poems";
 import { FilterBar } from "../components/FilterBar";
-import { PoemsContainer } from "./ExplorePoems.styles";
-import {useQuery} from '@tanstack/react-query'
-import { Stack } from "@mui/material";
+import { Box, Pagination, Stack } from "@mui/material";
 import { PoemPreview } from "../components/PoemPreview";
 import { PoemT } from "../api/types";
 import debounce from "lodash.debounce";
+import { usePaginatedPoemsQuery } from "../hooks/usePaginatedPoemsQuery";
+import { seq } from "../utils/arrays";
+import { PAGE_SIZE } from "../environment/config";
 
-export const ExplorePoems = () => {    
+export const ExplorePoems = () => {
     /**
      * Query for searching poems by title or poet name
     */
@@ -37,24 +38,35 @@ export const ExplorePoems = () => {
         }
     }
 
-    const { data } = useQuery(
-        ['poems', query, selectedInitial], 
-        () => findPoems(query, selectedInitial)
+    const { data, page, handlePageChange } = usePaginatedPoemsQuery(
+        ['poems', query, selectedInitial],
+        (page: number) => findPoems(query, selectedInitial, page)
     );
-    
+
     return (
-        <PoemsContainer>
-            <FilterBar 
+        <Stack direction="column">
+            <FilterBar
                 selectedInitial={selectedInitial}
                 onQueryChange={handleQueryChange}
                 onInitialChange={handleInitialChange}
             />
 
             <Stack direction="column" sx={{ marginTop: "2em" }}>
-                {data?.map((poem: PoemT) => (
-                    <PoemPreview key={poem._id} poem={poem}/>
-                ))}
+                {data?.docs ? (
+                    data.docs.map((poem: PoemT) => (
+                        <PoemPreview key={poem._id} poem={poem} />
+                    ))
+                ):(
+                    seq(0, PAGE_SIZE).map((i) => ( 
+                        <PoemPreview key={i}/> 
+                    ))
+                )}
             </Stack>
-        </PoemsContainer>
+
+            <Stack direction="row" sx={{ mt: "1em" }}>
+                <Box sx={{ flexGrow: 1 }} />
+                <Pagination shape="rounded" count={data?.totalPages} page={page} onChange={handlePageChange} />
+            </Stack>
+        </Stack>
     );
 }

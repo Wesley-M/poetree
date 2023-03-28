@@ -5,7 +5,7 @@ import { alpha, Box, styled, Typography } from "@mui/material";
 import { parsePoem } from "../utils/poems";
 
 const Title = styled(Typography)(({theme}) => ({
-    fontSize: "1.5em",
+    fontSize: "2.5em",
     fontWeight: "bold",
     fontStyle: "italic",
     color: theme.palette.text.primary
@@ -13,7 +13,7 @@ const Title = styled(Typography)(({theme}) => ({
 
 const Author = styled(Typography)(({theme}) => ({
     marginTop: "0.25em",
-    fontSize: "1em",
+    fontSize: "1.1em",
     textTransform: "uppercase",
     color: alpha(theme.palette.text.primary, 0.4)
 }));
@@ -28,8 +28,6 @@ export const Poem = () => {
         return findPoemById(id ?? "");
     });
 
-    console.log(poem);
-
     const verseStyle = {
         color: "text.primary", 
         fontSize: "1.1em", 
@@ -41,7 +39,7 @@ export const Poem = () => {
         <Box>
             <Title>{poem?.title}</Title>
             <Author>By {poem?.author}</Author>
-            <Box sx={{ marginTop: "2em" }}>
+            <Box sx={{ marginTop: "2.5em" }}>
                 {parsePoem(poem?.text, verseStyle)}
             </Box>
         </Box>

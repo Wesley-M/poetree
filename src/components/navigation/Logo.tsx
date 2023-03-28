@@ -1,14 +1,17 @@
-import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Logo = () => {
     return (
-        <Typography
-            sx={{
+        <Link 
+            to="/"
+            style={{
                 fontFamily: "Merienda, cursive",
                 fontSize: "1.5rem",
+                color: "white",
+                textDecoration: "none"
             }}
         >
             Poetree
-        </Typography>
+        </Link>
     );
 }
