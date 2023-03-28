@@ -1,13 +1,32 @@
 import { useCallback, useState } from "react";
 import { findPoems } from "../api/poems";
 import { FilterBar } from "../components/FilterBar";
-import { Box, Pagination, Stack } from "@mui/material";
+import { Box, Pagination, Stack, Typography } from "@mui/material";
 import { PoemPreview } from "../components/PoemPreview";
 import { PoemT } from "../api/types";
 import debounce from "lodash.debounce";
 import { usePaginatedPoemsQuery } from "../hooks/usePaginatedPoemsQuery";
 import { seq } from "../utils/arrays";
 import { PAGE_SIZE } from "../environment/config";
+import { NoPoemsFound } from "../components/NoPoemsFound";
+
+const PoemsNumberStats = ({ totalPoems } : {totalPoems ?: number}) => {
+    return (
+        <>
+            {totalPoems && totalPoems > 0 ? (
+                <Typography 
+                    sx= {{ 
+                        marginBottom: "0.5em", 
+                        opacity: 0.45,
+                        fontFamily: "Roboto, sans-serif"
+                    }}
+                >
+                    <span style={{ fontWeight: "bold"}}>{totalPoems}</span> poems were found
+                </Typography>
+            ) : null}
+        </>
+    );
+}
 
 export const ExplorePoems = () => {
     /**
@@ -38,10 +57,13 @@ export const ExplorePoems = () => {
         }
     }
 
-    const { data, page, handlePageChange } = usePaginatedPoemsQuery(
+    const { data, page, handlePageChange, isLoading } = usePaginatedPoemsQuery(
         ['poems', query, selectedInitial],
         (page: number) => findPoems(query, selectedInitial, page)
     );
+
+    const poems = data?.docs;
+    const hasPoems = poems && poems.length > 0;
 
     return (
         <Stack direction="column">
@@ -52,20 +74,26 @@ export const ExplorePoems = () => {
             />
 
             <Stack direction="column" sx={{ marginTop: "2em" }}>
-                {data?.docs ? (
-                    data.docs.map((poem: PoemT) => (
-                        <PoemPreview key={poem._id} poem={poem} />
+                <PoemsNumberStats totalPoems={data?.totalDocs}/>
+
+                {isLoading ? (
+                    seq(0, PAGE_SIZE).map((i) => (
+                        <PoemPreview key={i} />
                     ))
-                ):(
-                    seq(0, PAGE_SIZE).map((i) => ( 
-                        <PoemPreview key={i}/> 
-                    ))
+                ) : (
+                    hasPoems ? (
+                        poems.map((poem: PoemT) => (
+                            <PoemPreview key={poem._id} poem={poem} />
+                        ))
+                    ) : (
+                        <NoPoemsFound />
+                    )
                 )}
             </Stack>
 
             <Stack direction="row" sx={{ mt: "1em" }}>
                 <Box sx={{ flexGrow: 1 }} />
-                <Pagination shape="rounded" count={data?.totalPages} page={page} onChange={handlePageChange} />
+                <Pagination count={data?.totalPages} page={page} onChange={handlePageChange} />
             </Stack>
         </Stack>
     );

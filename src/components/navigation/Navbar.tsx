@@ -6,9 +6,13 @@ import { Logo } from "./Logo";
 import { NavbarButton } from "./Navbar.styles";
 import { Wrapper } from "../Wrapper";
 import { useNavigate } from "react-router-dom";
+import { useUrlListener } from "../../hooks/useUrlListener";
 
 const Navbar = () => {
     const navigate = useNavigate();
+
+    const urlIdx = useUrlListener(['/', '/poems/']);
+    const isPoem = urlIdx === 1;
 
     return (
         <AppBar position="static" color="primary">
@@ -18,8 +22,13 @@ const Navbar = () => {
                     <Box flex={1} />
                     <Stack direction="row" spacing={1}>
                         <NavbarButton onClick={() => navigate("poems/lucky")}>
-                            Feeling lucky
+                            FEELING LUCKY
                         </NavbarButton>
+                        {isPoem &&
+                            <NavbarButton onClick={() => navigate("/")}>
+                                EXPLORE
+                            </NavbarButton>
+                        }
                     </Stack>
 
                 </Toolbar>

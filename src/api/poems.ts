@@ -1,13 +1,13 @@
 import { PAGE_SIZE } from "../environment/config";
 import { request } from "./request";
-import { PaginatedDocs, PaginatedPoems, PoemT } from "./types";
+import { PaginatedPoems, PoemIdT, PoemT } from "./types";
 
 export const findPoemById = async (id: string): Promise<PoemT> => {
     const response = await request.get(`/${id}`);
     return response.data;
 }
 
-export const findRandomPoem = async (): Promise<PoemT> => {
+export const findRandomPoemId = async (): Promise<PoemIdT> => {
     const response = await request.get('/lucky');
     return response.data;
 }

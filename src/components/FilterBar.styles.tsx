@@ -25,7 +25,7 @@ export const SearchIconWrapper = styled('div')(({ theme }) => ({
 export const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   borderRadius: theme.shape.borderRadius,
-  border: `2px solid ${alpha(theme.palette.text.primary, 0.1)}`,
+  border: `2px solid ${alpha(theme.palette.text.primary, 0.2)}`,
   '&.Mui-focused': {
     border: `2px solid  ${theme.palette.primary.main}`,
   },

@@ -5,6 +5,8 @@ export type PoemT = {
     author: string;
 }
 
+export type PoemIdT = Pick<PoemT, '_id'>;
+
 export interface PaginatedPoems {
     totalDocs?: number;
     docs?: PoemT[];

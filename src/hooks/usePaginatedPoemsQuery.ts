@@ -9,7 +9,7 @@ export const usePaginatedPoemsQuery = (queryKey: any[], queryFn: (page: number) 
         setPage(value);
     };
 
-    const { data } = useQuery(
+    const { data, isLoading } = useQuery(
         [...queryKey, page],
         () => queryFn(page),
         { keepPreviousData: true }
@@ -23,6 +23,7 @@ export const usePaginatedPoemsQuery = (queryKey: any[], queryFn: (page: number) 
     return {
         page,
         data,
-        handlePageChange
+        handlePageChange,
+        isLoading,
     };
 }

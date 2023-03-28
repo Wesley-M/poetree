@@ -14,7 +14,7 @@ const PAGE_SIZE = 10;
 */
 const getApiURL = () => {
   if (MODE === "dev") {
-    return "http://localhost:5050/poems";
+    return "http://192.168.0.102:5050/poems";
   } else {
     return "https://api.example.com";
   }
