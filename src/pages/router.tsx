@@ -1,12 +1,12 @@
 import {
-    createBrowserRouter,
+    createHashRouter,
 } from "react-router-dom";
 import { Poem } from "./Poem";
 import { Root } from "./Root";
 import { ExplorePoems } from "./ExplorePoems";
 import { LuckyPoemRedirect } from "./LuckyPoemRedirect";
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
     {
         path: "/",
         element: <Root />,
